@@ -1,4 +1,7 @@
-# QuickStart
+---
+id: quickstart
+title: Quickstart
+---
 
 **NodeJS v 8.9** and higher required to start.
 CodeceptJS is multi-backend testing framework. It can execute tests using different libraries like webdriverio, Puppeteer, Protractor, etc.
@@ -11,7 +14,7 @@ CodeceptJS is multi-backend testing framework. It can execute tests using differ
 ## Using Puppeteer
 
 
-<video onclick="this.paused ? this.play() : this.pause();" src="/images/codeceptjs-install.mp4" style="width: 100%" controls></video>
+<video onclick="this.paused ? this.play() : this.pause();" src="/img/codeceptjs-install.mp4" style="width: 100%" controls></video>
 
 
 1) Install CodeceptJS with Puppeteer
@@ -35,7 +38,7 @@ npm install codeceptjs puppeteer --save-dev
 
 ```sh
 ? What helpers do you want to use?
- ◯ WebDriverIO
+ ◯ WebDriver
  ◯ Protractor
 ❯◉ Puppeteer
  ◯ Appium
@@ -101,10 +104,12 @@ Puppeteer starts a browser without showing its window. To see the browser, edit 
 
 Rerun the test to see the browser.
 
----
+> Next: [CodeceptJS with Puppeteer >>>](https://codecept.io/puppeteer/)
 
-### Next: [CodeceptJS with Puppeteer >>>](https://codecept.io/puppeteer/)
-### Next: [CodeceptJS Basics >>>](https://codecept.io/basics/)
+> Next: [CodeceptJS Basics >>>](https://codecept.io/basics/)
+
+> Next: [Demo Project](https://github.com/DavertMik/codeceptjs-todomvc-puppeteer)
+
 
 ---
 
@@ -122,11 +127,11 @@ Rerun the test to see the browser.
 codeceptjs init
 ```
 
-3) Answer questions. Agree on defaults, when asked to select helpers choose **WebDriverIO**.
+3) Answer questions. Agree on defaults, when asked to select helpers choose **WebDriver**.
 
 ```sh
 ? What helpers do you want to use?
-❯◉ WebDriverIO
+❯◉ WebDriver
  ◯ Protractor
  ◯ Puppeteer
  ◯ Appium
@@ -190,21 +195,20 @@ My First Test --
  ✓ OK
 ```
 
----
 
-### Next: [CodeceptJS Basics >>>](https://codecept.io/basics/)
-### Next: [Acceptance Testing in CodeceptJS >>>](https://codecept.io/puppeteer/)
+> Next: [CodeceptJS Basics >>>](https://codecept.io/basics/)
 
----
+> Next: [Acceptance Testing in CodeceptJS >>>](https://codecept.io/acceptance/)
+
 
 ## Using Protractor
 
-[**Follow corresponding guide >>**](https://codecept.io/angular/)
+> [**Follow corresponding guide >>**](https://codecept.io/angular/)
 
 ## Using Appium
 
-[**Follow corresponding guide >>**](https://codecept.io/mobile/)
+> [**Follow corresponding guide >>**](https://codecept.io/mobile/)
 
 ## Using NightmareJS
 
-[**Follow corresponding guide >>**](https://codecept.io/nightmare/)
+> [**Follow corresponding guide >>**](https://codecept.io/nightmare/)

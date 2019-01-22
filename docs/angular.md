@@ -1,3 +1,8 @@
+---
+id: angular
+title: Testing with Protractor
+---
+
 # Protractor Testing with CodeceptJS
 
 ## Introduction
@@ -9,12 +14,12 @@ This way you aren't be bound to implementation, and your acceptance tests will w
 As you know, [Protractor](http://www.protractortest.org/#/) is an official tool for testing AngularJS applications.
 CodeceptJS should not be considered as alternative to Protractor but a testing framework utilizing this powerful library.
 
-![](http://codecept.io/images/angular-protractor.png)
+![angular-protractor](https://codecept.io/img/angular-protractor.png)
 
 So there is no magic in testing of AngularJS application in CodeceptJS.
 You just execute regular Protractor commands, packed in a simple high-level API.
 
-![](http://codecept.io/images/todo.png)
+![todo-mvc](https://codecept.io/img/todo.png)
 
 As an example we will use popular [TodoMVC application](http://todomvc.com/examples/angularjs/#/).
 How would we test creating a new todo item in CodeceptJS?
@@ -85,28 +90,22 @@ You will be asked questions about initial configuration, make sure you select Pr
 If you didn't have Protractor library it **will be installed**.
 Please agree to extend steps, and use `http://todomvc.com/examples/angularjs/` as a url for Protractor helper.
 
-For TodoMVC application you will have following config created in `codecept.json` file:
+For TodoMVC application you will have following config created in `codecept.conf.js` file:
 
-```json
-{
-  "tests": "./*_test.js",
-  "timeout": 10000,
-  "output": "./output",
-  "helpers": {
-    "Protractor": {
-      "url": "http://todomvc.com/examples/angularjs/",
-      "driver": "hosted",
-      "browser": "chrome",
-      "rootElement": "body"
-    }
-  },
-  "include": {
-    "I": "./steps_file.js"
-  },
-  "bootstrap": false,
-  "mocha": {},
-  "name": "todoangular"
-}
+```js
+exports.config = { tests: './*_test.js',
+  timeout: 10000,
+  output: './output',
+  helpers:
+   { Protractor:
+      { url: 'http://todomvc.com/examples/angularjs/',
+        driver: 'hosted',
+        browser: 'chrome',
+        rootElement: 'body' } },
+  include: { I: './steps_file.js' },
+  bootstrap: false,
+  mocha: {},
+  name: 'todoangular' }
 ```
 
 First test can be generated with `gt` command:
@@ -228,6 +227,9 @@ Scenario('check todo item', (I) => {
 });
 ```
 
+> This example is [available on GitHub](https://github.com/DavertMik/codeceptjs-angular-todomvc).
+
+
 ## Locators
 
 Like you may have noticed, CodeceptJS doesn't use `by.*` locators similar to Protractor or Selenium Webdriver.
@@ -303,6 +305,4 @@ element.all(by.repeater('result in memory'));
 This way we recommend to implement all custom logic using low-level Protractor syntax and using it inside scenario tests.
 Please see an [example of such helper](http://codecept.io/helpers/#protractor-example).
 
-### done()
 
-Almost ) This example is [available on GitHub](https://github.com/DavertMik/codeceptjs-angular-todomvc).

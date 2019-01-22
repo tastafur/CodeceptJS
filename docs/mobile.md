@@ -1,4 +1,7 @@
-# Mobile Testing
+---
+id: mobile
+title: Mobile Testing with Appium
+---
 
 CodeceptJS allows to test mobile and hybrid apps in a similar manner web applications are tested.
 Such tests are executed using [Appium](http://appium.io) on emulated or physical devices. Also, Appium allows to test web application on mobile devices.
@@ -70,7 +73,7 @@ Select [Appium helper](http://codecept.io/helpers/Appium/) when asked.
 
 ```sh
 ? What helpers do you want to use?
- ◯ WebDriverIO
+ ◯ WebDriver
  ◯ Protractor
  ◯ Puppeteer
  ◯ Nightmare
@@ -84,7 +87,7 @@ You will also be asked for the platform and the application package.
 ? [Appium] Application package. Path to file or url
 ```
 
-Check the newly created `codecept.json` configuration file.
+Check the newly created `codecept.conf.js` configuration file.
 You may want to set some additional Appium settings via [desiredCapabilities](https://appium.io/docs/en/writing-running-appium/caps/)
 
 ```js
@@ -284,4 +287,3 @@ Just as you can specify android, and ios-specific locators, you can do so for we
 I.click({web: '#login', ios: '//UIAApplication[1]/UIAWindow[1]/UIAButton[1]'});
 ```
 
-## done()

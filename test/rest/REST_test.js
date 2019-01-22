@@ -23,16 +23,14 @@ const data = {
 };
 
 describe('REST', () => {
-  before(() => {
+  beforeEach((done) => {
     I = new REST({
       endpoint: api_url,
       defaultHeaders: {
         'X-Test': 'test',
       },
     });
-  });
 
-  beforeEach((done) => {
     try {
       fs.writeFileSync(dbFile, JSON.stringify(data));
     } catch (err) {
@@ -43,85 +41,76 @@ describe('REST', () => {
 
   describe('basic requests', () => {
     it('should send GET requests', () => I.sendGetRequest('/user').then((response) => {
-      response.body.name.should.eql('davert');
+      response.data.name.should.eql('davert');
     }));
 
     it('should send PATCH requests: payload format = json', () => I.sendPatchRequest('/user', { email: 'user@user.com' }).then((response) => {
-      response.body.email.should.eql('user@user.com');
+      response.data.email.should.eql('user@user.com');
     }));
+
     it('should send PATCH requests: payload format = form urlencoded', () => I.sendPatchRequest('/user', 'email=user@user.com').then((response) => {
-      response.body.email.should.eql('user@user.com');
+      response.data.email.should.eql('user@user.com');
     }));
 
     it('should send POST requests: payload format = json', () => I.sendPostRequest('/user', { name: 'john' }).then((response) => {
-      response.body.name.should.eql('john');
+      response.data.name.should.eql('john');
     }));
     it('should send POST requests: payload format = form urlencoded', () => I.sendPostRequest('/user', 'name=john').then((response) => {
-      response.body.name.should.eql('john');
+      response.data.name.should.eql('john');
     }));
 
     it('should send PUT requests: payload format = json', () => I.sendPutRequest('/posts/1', { author: 'john' }).then((response) => {
-      response.body.author.should.eql('john');
+      response.data.author.should.eql('john');
       return I.sendGetRequest('/posts/1').then((response) => {
-        response.body.author.should.eql('john');
+        response.data.author.should.eql('john');
       });
     }));
     it('should send PUT requests: payload format = form urlencoded', () => I.sendPutRequest('/posts/1', 'author=john').then((response) => {
-      response.body.author.should.eql('john');
+      response.data.author.should.eql('john');
       return I.sendGetRequest('/posts/1').then((response) => {
-        response.body.author.should.eql('john');
+        response.data.author.should.eql('john');
       });
     }));
 
-    it('should send DELETE requests', () => I.sendDeleteRequest('/posts/1').then(response => I.sendGetRequest('/posts').then((response) => {
-      response.body.should.be.empty;
+    it('should send DELETE requests', () => I.sendDeleteRequest('/posts/1').then(() => I.sendGetRequest('/posts').then((response) => {
+      response.data.should.be.empty;
     })));
-  });
 
-  describe('headers', () => {
-    it('should send request headers', () => I.sendGetRequest('/headers', { 'Content-Type': 'application/json' }).then((resp) => {
-      resp.body.should.have.property('content-type');
-      resp.body['content-type'].should.eql('application/json');
-
-      resp.body.should.have.property('x-test');
-      resp.body['x-test'].should.eql('test');
-    }));
-
-    it('should set request headers', function* () {
-      I.haveRequestHeaders({ HTTP_X_REQUESTED_WITH: 'xmlhttprequest' });
-      yield I.sendGetRequest('/headers', { 'Content-Type': 'application/json' }).then((resp) => {
-        resp.body.should.have.property('content-type');
-        resp.body['content-type'].should.eql('application/json');
-
-        resp.body.should.have.property('x-test');
-        resp.body['x-test'].should.eql('test');
-
-        resp.body.should.have.property('http_x_requested_with');
-        resp.body.http_x_requested_with.should.eql('xmlhttprequest');
+    it('should update request with onRequest', async () => {
+      I.config.onRequest = request => request.data = { name: 'Vasya' };
+      return I.sendPostRequest('/user', { name: 'john' }).then((response) => {
+        response.data.name.should.eql('Vasya');
       });
     });
 
-    it('should reset headers when flag is set', function* () {
-      const defaultHeaders = {
-        'X-Test': 'test',
-      };
-      const iResetHeaders = new REST({
-        endpoint: api_url,
-        defaultHeaders: Object.assign({}, defaultHeaders),
-        resetHeaders: true,
+    it('should set timeout for the request', () => {
+      I.setRequestTimeout(2000);
+      I.sendGetRequest('/posts').then((response) => {
+        response.config.timeout.should.eql(2000);
       });
-      const requestHeaders = {
-        'X-Request-Header': 'header',
-      };
+    });
+  });
 
-      iResetHeaders.haveRequestHeaders(requestHeaders);
-      yield iResetHeaders.sendGetRequest('/headers');
+  describe('headers', () => {
+    it('should send request headers', () => I.sendGetRequest('/user', { 'Content-Type': 'application/json' }).then((resp) => {
+      resp.headers.should.have.property('content-type');
+      resp.headers['content-type'].should.include('application/json');
 
-      const expectedHeaders = Object.assign({}, defaultHeaders, { 'content-length': 0 });
+      resp.config.headers.should.have.property('X-Test');
+      resp.config.headers['X-Test'].should.eql('test');
+    }));
 
-      const response = yield iResetHeaders.sendGetRequest('/headers');
+    it('should set request headers', function* () {
+      yield I.sendGetRequest('/user', { 'Content-Type': 'application/json', HTTP_X_REQUESTED_WITH: 'xmlhttprequest' }).then((resp) => {
+        resp.config.headers.should.have.property('Content-Type');
+        resp.config.headers['Content-Type'].should.eql('application/json');
 
-      response.request.headers.should.eql(expectedHeaders);
+        resp.config.headers.should.have.property('X-Test');
+        resp.config.headers['X-Test'].should.eql('test');
+
+        resp.config.headers.should.have.property('HTTP_X_REQUESTED_WITH');
+        resp.config.headers.HTTP_X_REQUESTED_WITH.should.eql('xmlhttprequest');
+      });
     });
   });
 });

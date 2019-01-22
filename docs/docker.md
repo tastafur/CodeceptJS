@@ -1,6 +1,10 @@
-# Codeceptjs Docker
+---
+id: docker
+title: Docker
+---
 
-CodeceptJS packed into container with the Nightmare, Protractor, Puppeteer, and WebDriverIO drivers.
+
+CodeceptJS packed into container with the Nightmare, Protractor, Puppeteer, and WebDriver drivers.
 
 ## How to Use
 
@@ -56,12 +60,12 @@ services:
 
 ### Linking Containers
 
-If using the Protractor or WebDriverIO drivers, link the container with a Selenium Standalone docker container with an alias of `selenium`. Additionally, make sure your `codeceptjs.conf.js` contains the following to allow CodeceptJS to identify where Selenium is running.
+If using the Protractor or WebDriver drivers, link the container with a Selenium Standalone docker container with an alias of `selenium`. Additionally, make sure your `codeceptjs.conf.js` contains the following to allow CodeceptJS to identify where Selenium is running.
 
 ```javascript
   ...
   helpers: {
-    WebDriverIO: {
+    WebDriver: {
       ...
       host: process.env.HOST
       ...
@@ -115,3 +119,30 @@ services:
     volumes:
       - .:/tests
 ```
+
+Moreover, alternatively arguments to `codecept run-multiple` command can be passed via `RUN_MULTIPLE` and `CODECEPT_ARGS` environment variable.
+For example this is what looks like in your codeceptjs.conf.js
+
+```yaml
+"multiple": {
+  "parallel": {
+    // Splits tests into 2 chunks
+    "chunks": 2
+  }
+}
+```
+
+Then to execute them use run-multiple command passing configured suite, which is parallel in this example:
+
+```yaml
+version: '2'
+services:
+  codeceptjs:
+    image: codeception/codeceptjs
+    environment:
+      - RUN_MULTIPLE=true
+      - CODECEPT_ARGS=parallel
+    volumes:
+      - .:/tests
+```
+If no `CODECEPT_ARGS` provided and `RUN_MULTIPLE` is `true`, tests will proceed with `CODECEPT_ARGS=--all`

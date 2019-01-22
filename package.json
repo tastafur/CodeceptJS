@@ -1,9 +1,10 @@
 {
   "name": "codeceptjs",
-  "version": "1.4.3",
+  "version": "2.0.3",
   "description": "Modern Era Acceptance Testing Framework for NodeJS",
   "keywords": [
     "acceptance",
+    "end2end",
     "bdd",
     "tdd",
     "testing"
@@ -30,13 +31,15 @@
   "scripts": {
     "build": "tsc -p ./",
     "json-server": "./node_modules/json-server/bin/index.js test/data/rest/db.json -p 8010 --watch -m test/data/rest/headers.js",
-    "lint": "eslint bin/ examples/ lib/ test/ translations/",
-    "lint-fix": "eslint bin/ examples/ lib/ test/ translations/ --fix",
+    "lint": "eslint bin/ examples/ lib/ test/ translations/ gulpfile.js",
+    "lint-fix": "eslint bin/ examples/ lib/ test/ translations/ gulpfile.js --fix",
     "docs": "gulp docs",
     "test": "mocha test/unit --recursive && mocha test/runner --recursive"
   },
   "dependencies": {
     "allure-js-commons": "^1.3.2",
+    "archiver": "^3.0.0",
+    "axios": "^0.18.0",
     "chalk": "^1.1.3",
     "commander": "^2.18.0",
     "css-to-xpath": "^0.1.0",
@@ -49,7 +52,8 @@
     "fs-extra": "^7.0.0",
     "gherkin": "^5.1.0",
     "glob": "^6.0.1",
-    "inquirer": "^0.11.0",
+    "inquirer": "^6.2.1",
+    "js-beautify": "^1.8.9",
     "mkdirp": "^0.5.1",
     "mocha": "^4.1.0",
     "nightmare-download-manager": "^0.2.5",
@@ -61,29 +65,32 @@
   },
   "devDependencies": {
     "@types/inquirer": "^0.0.35",
-    "@types/node": "^8.10.29",
+    "@types/node": "^8.10.37",
     "chai": "^3.4.1",
     "chai-as-promised": "^5.2.0",
     "co-mocha": "^1.2",
-    "documentation": "^4.0.0-beta1",
+    "documentation": "^8.1.2",
     "eslint": "^4.17.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-mocha": "^5.2.1",
     "faker": "^4.1.0",
-    "gulp": "^3.9.1",
-    "gulp-documentation": "^2.2.0",
+    "gulp": "^4.0.0",
+    "gulp-append-prepend": "^1.0.6",
+    "gulp-documentation": "^3.2.1",
     "gulp-mustache": "^2.2.0",
+    "husky": "^1.2.1",
     "json-server": "^0.10.1",
     "nightmare": "^3.0.0",
     "nyc": "^11.9.0",
     "protractor": "^5.4.1",
-    "puppeteer": "^1.8.0",
+    "puppeteer": "^1.10.0",
     "rosie": "^1.6.0",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.14.0",
     "typescript": "^2.9.2",
     "unirest": "^0.5.1",
-    "webdriverio": "^4.13.2",
+    "webdriverio": "^5.2.8",
     "xmldom": "^0.1.27",
     "xpath": "0.0.27"
   },
@@ -91,5 +98,6 @@
     "node": ">=8.9.1",
     "npm": ">=5.6.0"
   },
-  "es6": true
+  "es6": true,
+  "husky": {}
 }

@@ -1,6 +1,10 @@
-# Configuration
+---
+id: configuration
+title: Configuration
+---
 
-CodeceptJS configuration is set in `codecept.json` file.
+
+CodeceptJS configuration is set in `codecept.conf.js` file.
 
 After running `codeceptjs init` it should be saved in test root.
 
@@ -21,13 +25,34 @@ Here is an overview of available options with their defaults:
 * **noGlobals**: `false` - disable registering global variables like `Actor`, `Helper`, `pause`, `within`, `DataTable`
 * **hooks**: - include custom listeners to plug into execution workflow. See [Custom Hooks](http://codecept.io/hooks/#custom-hooks)
 * **translation**: - [locale](http://codecept.io/translation/) to be used to print s  teps output, as well as used in source code.
+* **require**: `[]` - array of module names to be required before codecept starts. See [Require](#require)
+
+
+## Require
+
+Requires described module before run. This option is useful for assertion libraries, so you may `--require should` instead of manually invoking `require('should')` within each test file. It can be used with relative paths, e.g. `"require": ["/lib/somemodule"]`, and installed packages.
+
+You can register ts-node, so you can use Typescript in tests with ts-node package
+```js
+exports.config = {
+  tests: './*_test.js',
+  timeout: 10000,
+  output: '',
+  helpers: {},
+  include: {},
+  bootstrap: false,
+  mocha: {},
+  // require modules
+  require: ["ts-node/register", "should"]
+}
+```
 
 ## Dynamic Configuration
 
  By default `codecept.json` is used for configuration. You can override its values in runtime by using `--override` or `-o` option in command line, passing valid JSON as a value:
 
 ```sh
-codeceptjs run -o '{ "helpers": {"WebDriverIO": {"browser": "firefox"}}}'
+codeceptjs run -o '{ "helpers": {"WebDriver": {"browser": "firefox"}}}'
 ```
 
  You can also switch to JS configuration format for more dynamic options.
@@ -38,7 +63,7 @@ codeceptjs run -o '{ "helpers": {"WebDriverIO": {"browser": "firefox"}}}'
 ```js
 exports.config = {
   helpers: {
-    WebDriverIO: {
+    WebDriver: {
       // load variables from the environment and provide defaults
       url: process.env.CODECEPT_URL || 'http://localhost:3000',
 
@@ -86,7 +111,7 @@ codeceptjs run --profile firefox
 ```js
 exports.config = {
   helpers: {
-    WebDriverIO: {
+    WebDriver: {
       url: 'http://localhost:3000',
       // load value from `profile`
       browser: process.profile || 'firefox'

@@ -4,8 +4,6 @@ const path = require('path');
 const Config = require('../lib/config');
 const Codecept = require('../lib/codecept');
 const { print, error } = require('../lib/output');
-const fileExists = require('../lib/utils').fileExists;
-const fs = require('fs');
 
 if (process.versions.node && process.versions.node.split('.') && process.versions.node.split('.')[0] < 8) {
   error('NodeJS >= 8 is required to run.');
@@ -18,6 +16,10 @@ if (process.versions.node && process.versions.node.split('.') && process.version
 program.command('init [path]')
   .description('Creates dummy config in current dir or [path]')
   .action(require('../lib/command/init'));
+
+program.command('migrate [path]')
+  .description('Migrate json config to js config in current dir or [path]')
+  .action(require('../lib/command/configMigrate'));
 
 program.command('shell [path]')
   .alias('sh')
@@ -121,6 +123,7 @@ program.command('run-multiple [suites...]')
   .option('--all', 'run all suites')
   .option('-g, --grep <pattern>', 'only run tests matching <pattern>')
   .option('-f, --fgrep <string>', 'only run tests containing <string>')
+  .option('-i, --invert', 'inverts --grep and --fgrep matches')
   .option('--steps', 'show step-by-step execution')
   .option('--verbose', 'output internal logging information')
   .option('--debug', 'output additional information')

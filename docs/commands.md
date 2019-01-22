@@ -1,8 +1,12 @@
-# Commands
+---
+id: commands
+title: Commands
+---
+
 
 ## Run
 
-Executes tests. Requires `codecept.json` config to be present in provided path.
+Executes tests. Requires `codecept.conf.js` config to be present in provided path.
 
 ---
 
@@ -64,7 +68,7 @@ codeceptjs run --config path/to/codecept.json
 Override config on the fly. Provide valid JSON which will be merged into current config:
 
 ```sh
-codeceptjs run --override '{ "helpers": {"WebDriverIO": {"browser": "chrome"}}}'
+codeceptjs run --override '{ "helpers": {"WebDriver": {"browser": "chrome"}}}'
 ```
 
 Run tests and produce xunit report:
@@ -85,7 +89,7 @@ codeceptjs run-multiple smoke:chrome regression:firefox
 
 ## Init
 
-Creates `codecept.json` file in current directory:
+Creates `codecept.conf.js` file in current directory:
 
 ```sh
 codeceptjs init
@@ -95,6 +99,14 @@ Or in provided path
 
 ```sh
 codecept init test
+```
+
+## Migrate
+
+Migrate your current `codecept.json` to `codecept.conf.js`
+
+```sh
+codeceptjs migrate
 ```
 
 ## Shell
@@ -110,19 +122,19 @@ codeceptjs shell
 Create new test
 
 ```sh
-codeceptjs generate test
+codeceptjs generate:test
 ```
 
 Create new pageobject
 
 ```sh
-codeceptjs generate pageobject
+codeceptjs generate:pageobject
 ```
 
 Create new helper
 
 ```sh
-codeceptjs generate helper
+codeceptjs generate:helper
 ```
 
 ## TypeScript Definitions

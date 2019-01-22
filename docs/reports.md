@@ -1,4 +1,7 @@
-# Reporters
+---
+id: reporters
+title: Reporters
+---
 
 ## Cli
 
@@ -71,8 +74,8 @@ GitHub --
  register
    [1] Starting recording promises
    Emitted | test.before
- > WebDriverIO._before
-   [1] Queued | hook WebDriverIO._before()
+ > WebDriver._before
+   [1] Queued | hook WebDriver._before()
    [1] Queued | amOnPage: https://github.com
    Emitted | step.before (I am on page "https://github.com")
  • I am on page "https://github.com"
@@ -150,7 +153,7 @@ Install it via NPM (locally or globally, depending on CodeceptJS installation ty
 npm i mocha-junit-reporter
 ```
 
-Additional configuration should be added to `codecept.json` to print xml report to `output` directory:
+Additional configuration should be added to `codecept.conf.js` to print xml report to `output` directory:
 
 ```json
   "mocha": {
@@ -172,7 +175,7 @@ Result will be located at `output/result.xml` file.
 
 Best HTML reports could be produced with [mochawesome](https://www.npmjs.com/package/mochawesome) reporter.
 
-![](http://codecept.io/images/mochawesome.png)
+![mochawesome](https://codecept.io/img/mochawesome.png)
 
 Install it via NPM:
 
